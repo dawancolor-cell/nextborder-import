@@ -26,7 +26,7 @@ import { ClientsView } from './components/views/ClientsView';
 import { VisaApplicationsView } from './components/views/VisaApplicationsView';
 import { WebsiteAnalyticsView } from './components/views/WebsiteAnalyticsView';
 import { AIBlogInspectorView } from './components/views/AIBlogInspectorView';
-import { BlogManagerView } from './components/views/BlogManagerView';
+import { AdminBlogStudioView } from './components/views/AdminBlogStudioView';
 import { StaffManagementView } from './components/views/StaffManagementView';
 import { PagesView } from './components/views/PagesView';
 import { SettingsView } from './components/views/SettingsView';
@@ -241,7 +241,7 @@ export default function App() {
         return <AIBlogInspectorView key="aiblog" language={language} />;
 
       case 'Blog Manager':
-        return <BlogManagerView key="blogmgr" language={language} />;
+        return <AdminBlogStudioView key="blogmgr" language={language} />;
 
       case 'Staff Management':
         return <StaffManagementView key="staff" language={language} />;
