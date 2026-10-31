@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { BookOpen, Plus, Search, ImagePlus, Video, Eye, Save, Trash2, X, FileText } from 'lucide-react';
 import { BlogArticle, storageService } from '../../services/storageService';
@@ -14,6 +14,8 @@ export const AdminBlogStudioView: React.FC<{ language: 'en' | 'bn' }> = ({ langu
   const [query, setQuery] = useState('');
   const [preview, setPreview] = useState(false);
   const [media, setMedia] = useState<MediaPreview[]>([]);
+  const mediaRef = useRef<MediaPreview[]>([]);
+  mediaRef.current = media;
   const [deleteTarget, setDeleteTarget] = useState<BlogArticle | null>(null);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState<BlogArticle['category']>('IELTS Preparation');
@@ -24,7 +26,7 @@ export const AdminBlogStudioView: React.FC<{ language: 'en' | 'bn' }> = ({ langu
   const isBn = language === 'bn';
   const filtered = useMemo(() => articles.filter(a => [a.title, a.excerpt, ...a.tags].join(' ').toLowerCase().includes(query.toLowerCase())), [articles, query]);
 
-  useEffect(() => () => media.forEach(item => URL.revokeObjectURL(item.url)), [media]);
+  useEffect(() => () => mediaRef.current.forEach(item => URL.revokeObjectURL(item.url)), []);
 
   const resetEditor = () => {
     setEditing(null); setTitle(''); setCategory('IELTS Preparation'); setExcerpt(''); setBody(''); setTags(''); setPreview(false);
