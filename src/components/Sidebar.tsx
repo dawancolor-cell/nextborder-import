@@ -12,6 +12,7 @@ import {
   UserCheck, 
   Layers, 
   Settings, 
+  Bell,
   ExternalLink,
   ChevronLeft,
   ChevronRight
@@ -28,7 +29,8 @@ export type NavTab =
   | 'Blog Manager'
   | 'Staff Management'
   | 'Pages'
-  | 'Settings';
+  | 'Settings'
+  | 'Notifications';
 
 interface SidebarProps {
   activeTab: NavTab;
@@ -45,17 +47,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onToggleCollapse,
   language
 }) => {
-  const navItems: { id: NavTab; labelEn: string; labelBn: string; icon: React.FC<{ className?: string }> }[] = [
-    { id: 'Dashboard', labelEn: 'Dashboard', labelBn: 'ড্যাশবোর্ড', icon: Home },
-    { id: 'Leads & Inquiries', labelEn: 'Leads & Inquiries', labelBn: 'লিডস ও অনুসন্ধান', icon: Users },
-    { id: 'IELTS Mock Test', labelEn: 'IELTS Mock Test', labelBn: 'আইইএলটিএস মক টেস্ট', icon: Award },
-    { id: 'Students / Clients', labelEn: 'Students / Clients', labelBn: 'শিক্ষার্থী / ক্লায়েন্ট', icon: GraduationCap },
-    { id: 'Visa Applications', labelEn: 'Visa Applications', labelBn: 'ভিসা আবেদন', icon: FileText },
-    { id: 'Website Analytics', labelEn: 'Website Analytics', labelBn: 'ওয়েবসাইট অ্যানালিটিক্স', icon: BarChart3 },
-    { id: 'AI Blog Inspector', labelEn: 'AI Blog Inspector', labelBn: 'এআই ব্লগ ইন্সপেক্টর', icon: Cpu },
-    { id: 'Blog Manager', labelEn: 'Blog Manager', labelBn: 'ব্লগ ম্যানেজার', icon: BookOpen },
-    { id: 'Staff Management', labelEn: 'Staff Management', labelBn: 'কর্মী ব্যবস্থাপনা', icon: UserCheck },
-    { id: 'Pages', labelEn: 'Pages', labelBn: 'পেজ সমূহ', icon: Layers },
+  const navItems: { id: NavTab; labelEn: string; labelBn: string; icon: React.FC<{ className?: string }>; group: string }[] = [
+    { id: 'Dashboard', labelEn: 'Dashboard', labelBn: 'ড্যাশবোর্ড', icon: Home, group: 'Overview' },
+    { id: 'Leads & Inquiries', labelEn: 'Leads & Inquiries', labelBn: 'লিডস ও অনুসন্ধান', icon: Users, group: 'CRM' },
+    { id: 'IELTS Mock Test', labelEn: 'IELTS Mock Test', labelBn: 'আইইএলটিএস মক টেস্ট', icon: Award, group: 'CRM' },
+    { id: 'Students / Clients', labelEn: 'Students / Clients', labelBn: 'শিক্ষার্থী / ক্লায়েন্ট', icon: GraduationCap, group: 'CRM' },
+    { id: 'Visa Applications', labelEn: 'Visa Applications', labelBn: 'ভিসা আবেদন', icon: FileText, group: 'CRM' },
+    { id: 'Website Analytics', labelEn: 'Website Analytics', labelBn: 'ওয়েবসাইট অ্যানালিটিক্স', icon: BarChart3, group: 'Insights' },
+    { id: 'AI Blog Inspector', labelEn: 'AI Blog Inspector', labelBn: 'এআই ব্লগ ইন্সপেক্টর', icon: Cpu, group: 'Content' },
+    { id: 'Blog Manager', labelEn: 'Blog Manager', labelBn: 'ব্লগ ম্যানেজার', icon: BookOpen, group: 'Content' },
+    { id: 'Staff Management', labelEn: 'Staff Management', labelBn: 'কর্মী ব্যবস্থাপনা', icon: UserCheck, group: 'Workspace' },
+    { id: 'Pages', labelEn: 'Pages', labelBn: 'পেজ সমূহ', icon: Layers, group: 'Workspace' },
     { id: 'Settings', labelEn: 'Settings', labelBn: 'সেটিংস', icon: Settings }
   ];
 
@@ -96,14 +98,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Navigation Items */}
       <div className="flex-1 py-4 px-3 space-y-1.5 overflow-y-auto">
-        {navItems.map((item) => {
+        {navItems.map((item, index) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
           const label = language === 'en' ? item.labelEn : item.labelBn;
 
+          const showGroup = index === 0 || navItems[index - 1].group !== item.group;
           return (
+            <React.Fragment key={item.id}>
+            {!collapsed && showGroup && <p className="px-3.5 pt-4 pb-1 text-[9px] uppercase tracking-[.22em] text-amber-200/45">{item.group}</p>}
             <button
-              key={item.id}
               onClick={() => onSelectTab(item.id)}
               className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-xs md:text-sm font-medium transition-all ${
                 isActive
@@ -115,6 +119,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-rose-300/80'}`} />
               {!collapsed && <span className="truncate">{label}</span>}
             </button>
+            </React.Fragment>
           );
         })}
       </div>
