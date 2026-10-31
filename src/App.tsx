@@ -30,6 +30,7 @@ import { AdminBlogStudioView } from './components/views/AdminBlogStudioView';
 import { StaffManagementView } from './components/views/StaffManagementView';
 import { PagesView } from './components/views/PagesView';
 import { SettingsView } from './components/views/SettingsView';
+import { NotificationsView } from './components/views/NotificationsView';
 
 import { INITIAL_LEADS } from './data/mockData';
 import { storageService } from './services/storageService';
@@ -248,6 +249,9 @@ export default function App() {
 
       case 'Pages':
         return <PagesView key="pages" language={language} />;
+
+      case 'Notifications':
+        return <NotificationsView key="notifications" language={language} />;
 
       case 'Settings':
         return <SettingsView key="settings" language={language} onShowToast={addToast} />;
