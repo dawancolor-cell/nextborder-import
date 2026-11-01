@@ -17,3 +17,9 @@
 ## Verification status
 - GitHub branch creation and file commits succeeded.
 - Automated build/lint has not been run in this environment. Run `npm run lint` and `npm run build` locally before merging.
+
+## 2026-11-01 - Admin workspace update
+- Grouped sidebar navigation into Overview, CRM, Insights, Content, and Workspace.
+- Added a Notification Center with search, unread filtering, mark-all-read, and read-on-open interactions using existing demo notification data.
+- Fixed Blog Studio object URL cleanup to avoid revoking active previews on each media state update.
+- Live notification integration, Supabase upload, schema changes, tests, merge, and production deployment remain pending/not performed.
