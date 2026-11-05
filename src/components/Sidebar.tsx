@@ -1,51 +1,13 @@
 import React from 'react';
-import { 
-  Home, 
-  Users, 
-  GraduationCap, 
-  FileText, 
-  Award, 
-  BarChart3, 
-  Cpu, 
-  BookOpen, 
-  UserCheck, 
-  Layers, 
-  Settings, 
-  Bell,
-  ExternalLink,
-  ChevronLeft,
-  ChevronRight
-} from 'lucide-react';
+import { Home, Users, GraduationCap, FileText, Award, BarChart3, Cpu, BookOpen, UserCheck, Layers, Settings, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export type NavTab = 
-  | 'Dashboard'
-  | 'Leads & Inquiries'
-  | 'IELTS Mock Test'
-  | 'Students / Clients'
-  | 'Visa Applications'
-  | 'Website Analytics'
-  | 'AI Blog Inspector'
-  | 'Blog Manager'
-  | 'Staff Management'
-  | 'Pages'
-  | 'Settings'
-  | 'Notifications';
-
+export type NavTab = 'Dashboard' | 'Leads & Inquiries' | 'IELTS Mock Test' | 'Students / Clients' | 'Visa Applications' | 'Website Analytics' | 'AI Blog Inspector' | 'Blog Manager' | 'Staff Management' | 'Pages' | 'Settings' | 'Notifications';
 interface SidebarProps {
-  activeTab: NavTab;
-  onSelectTab: (tab: NavTab) => void;
-  collapsed: boolean;
-  onToggleCollapse: () => void;
-  language: 'en' | 'bn';
+  activeTab: NavTab; onSelectTab: (tab: NavTab) => void; collapsed: boolean;
+  onToggleCollapse: () => void; language: 'en' | 'bn';
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({
-  activeTab,
-  onSelectTab,
-  collapsed,
-  onToggleCollapse,
-  language
-}) => {
+export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab, collapsed, onToggleCollapse, language }) => {
   const navItems: { id: NavTab; labelEn: string; labelBn: string; icon: React.FC<{ className?: string }>; group: string }[] = [
     { id: 'Dashboard', labelEn: 'Dashboard', labelBn: 'ড্যাশবোর্ড', icon: Home, group: 'Overview' },
     { id: 'Leads & Inquiries', labelEn: 'Leads & Inquiries', labelBn: 'লিডস ও অনুসন্ধান', icon: Users, group: 'CRM' },
@@ -57,93 +19,39 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'Blog Manager', labelEn: 'Blog Manager', labelBn: 'ব্লগ ম্যানেজার', icon: BookOpen, group: 'Content' },
     { id: 'Staff Management', labelEn: 'Staff Management', labelBn: 'কর্মী ব্যবস্থাপনা', icon: UserCheck, group: 'Workspace' },
     { id: 'Pages', labelEn: 'Pages', labelBn: 'পেজ সমূহ', icon: Layers, group: 'Workspace' },
-    { id: 'Settings', labelEn: 'Settings', labelBn: 'সেটিংস', icon: Settings }
+    { id: 'Settings', labelEn: 'Settings', labelBn: 'সেটিংস', icon: Settings, group: 'Workspace' }
   ];
-
-  return (
-    <aside
-      className={`relative z-20 flex flex-col justify-between border-r border-white/10 glass-panel transition-all duration-300 select-none ${
-        collapsed ? 'w-20' : 'w-64 md:w-72'
-      }`}
-    >
-      {/* Original company emblem: use the repository's supplied logo asset, not the placeholder SVG. */}
-      <div className="px-4 py-5 flex flex-col items-center border-b border-white/10">
-        <div className="flex items-center justify-between w-full">
-          <div className="mx-auto flex flex-col items-center">
-            <div className="relative group">
-              <span
-                aria-hidden="true"
-                className="absolute -inset-2 rounded-full bg-amber-300/10 blur-md opacity-70 group-hover:opacity-100 transition-opacity duration-700"
-              />
-              <div className={`relative rounded-full overflow-hidden border border-amber-300/70 shadow-[0_0_0_2px_rgba(212,175,55,.16),0_0_24px_rgba(212,175,55,.18)] transition-transform duration-500 ease-out group-hover:scale-[1.035] ${collapsed ? 'h-12 w-12' : 'h-[108px] w-[108px]'}`}>
-                <img
-                  src="/company-logo.png"
-                  alt="NextBorder company logo"
-                  className="h-full w-full object-cover"
-                  loading="eager"
-                  onError={(event) => {
-                    event.currentTarget.style.display = 'none';
-                  }}
-                />
-              </div>
-            </div>
-            {!collapsed && (
-              <span className="mt-3 text-[9px] font-semibold uppercase tracking-[.24em] text-amber-200/70">
-                Admin Workspace
-              </span>
-            )}
-          </div>
-          <button
-            onClick={onToggleCollapse}
-            className="hidden md:flex p-1.5 rounded-lg text-rose-300 hover:text-white hover:bg-white/10 transition-colors"
-            title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          >
-            {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Navigation Items */}
-      <div className="flex-1 py-4 px-3 space-y-1.5 overflow-y-auto">
-        {navItems.map((item, index) => {
-          const Icon = item.icon;
-          const isActive = activeTab === item.id;
-          const label = language === 'en' ? item.labelEn : item.labelBn;
-
-          const showGroup = index === 0 || navItems[index - 1].group !== item.group;
-          return (
-            <React.Fragment key={item.id}>
-            {!collapsed && showGroup && <p className="px-3.5 pt-4 pb-1 text-[9px] uppercase tracking-[.22em] text-amber-200/45">{item.group}</p>}
-            <button
-              onClick={() => onSelectTab(item.id)}
-              className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-xs md:text-sm font-medium transition-all ${
-                isActive
-                  ? 'glass-pill-active text-white font-semibold shadow-lg'
-                  : 'text-rose-200/75 hover:text-white hover:bg-white/5'
-              }`}
-              title={label}
-            >
-              <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-rose-300/80'}`} />
-              {!collapsed && <span className="truncate">{label}</span>}
-            </button>
-            </React.Fragment>
-          );
-        })}
-      </div>
-
-      {/* Bottom Visit Website Action (Image 1 replica) */}
-      <div className="p-4 border-t border-white/10">
-        <a
-          href="https://motionsites.ai/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl glass-panel border-white/15 text-xs font-semibold text-rose-200 hover:text-white hover:bg-rose-900/30 transition-all shadow-sm"
-        >
-          <ExternalLink className="w-3.5 h-3.5" />
-          {!collapsed && <span>{language === 'en' ? 'Visit Website' : 'ওয়েবসাইট দেখুন'}</span>}
+  return <aside className={`relative z-20 flex flex-col justify-between border-r border-white/10 glass-panel transition-all duration-300 select-none ${collapsed ? 'w-20' : 'w-64 md:w-72'}`}>
+    <div className="px-4 py-5 flex flex-col items-center border-b border-white/10">
+      <div className="flex items-center justify-between w-full">
+        <a href="https://www.nextborder.online/" aria-label="Next Border home" className="mx-auto flex flex-col items-center group">
+          <span className={`relative block overflow-hidden rounded-full border border-[#009193]/70 bg-[#09131D] shadow-[0_0_0_2px_rgba(0,145,147,.12),0_0_24px_rgba(0,145,147,.18)] transition-transform duration-500 group-hover:scale-[1.035] ${collapsed ? 'h-12 w-12' : 'h-[108px] w-[108px]'}`}>
+            <img src="/nextborder-logo.svg" alt="Next Border Official Crest" className="h-full w-full object-cover" loading="eager" decoding="async" />
+          </span>
+          {!collapsed && <span className="mt-3 text-[9px] font-semibold uppercase tracking-[.24em] text-teal-200/70">Admin Workspace</span>}
         </a>
+        <button type="button" onClick={onToggleCollapse} className="hidden md:flex p-1.5 rounded-lg text-rose-300 hover:text-white hover:bg-white/10 transition-colors" title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
+          {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+        </button>
       </div>
-    </aside>
-  );
+    </div>
+    <div className="flex-1 py-4 px-3 space-y-1.5 overflow-y-auto">
+      {navItems.map((item, index) => {
+        const Icon = item.icon; const isActive = activeTab === item.id; const label = language === 'en' ? item.labelEn : item.labelBn;
+        const showGroup = index === 0 || navItems[index - 1].group !== item.group;
+        return <React.Fragment key={item.id}>
+          {!collapsed && showGroup && <p className="px-3.5 pt-4 pb-1 text-[9px] uppercase tracking-[.22em] text-teal-200/45">{item.group}</p>}
+          <button type="button" onClick={() => onSelectTab(item.id)} className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-xs md:text-sm font-medium transition-all ${isActive ? 'glass-pill-active text-white font-semibold shadow-lg' : 'text-rose-200/75 hover:text-white hover:bg-white/5'}`} title={label}>
+            <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-rose-300/80'}`} />
+            {!collapsed && <span className="truncate">{label}</span>}
+          </button>
+        </React.Fragment>;
+      })}
+    </div>
+    <div className="p-4 border-t border-white/10">
+      <a href="https://www.nextborder.online/" className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl glass-panel border-white/15 text-xs font-semibold text-rose-200 hover:text-white hover:bg-rose-900/30 transition-all shadow-sm">
+        <ExternalLink className="w-3.5 h-3.5" />{!collapsed && <span>{language === 'en' ? 'Visit Website' : 'ওয়েবসাইট দেখুন'}</span>}
+      </a>
+    </div>
+  </aside>;
 };
