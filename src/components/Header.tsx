@@ -16,7 +16,7 @@ import {
 import { NOTIFICATIONS } from '../data/mockData';
 import { NotificationItem } from '../types';
 import { waterAudio } from './WaterAudio';
-import { NextBorderLogo } from './NextBorderLogo';
+
 
 interface HeaderProps {
   language: 'en' | 'bn';
@@ -79,8 +79,11 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="relative z-30 px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 border-b border-white/10 glass-panel">
-      {/* Left zone: Kalima Tayyiba Multi-Color Calligraphic Headline */}
-      <div className="flex items-center">
+      {/* Left zone: Official Next Border brand crest plus Arabic calligraphy */}
+      <div className="flex items-center gap-3 min-w-0">
+        <a href="https://www.nextborder.online/" aria-label="Next Border website" className="hidden sm:block h-12 w-12 md:h-14 md:w-14 shrink-0 overflow-hidden rounded-full border border-[#009193]/70 bg-[#09131D] shadow-[0_0_18px_rgba(0,145,147,.22)] transition-transform duration-300 hover:scale-105">
+          <img src="/nextborder-logo.svg" alt="Next Border Official Crest" className="h-full w-full object-cover" loading="eager" decoding="async" />
+        </a>
         <h1 
           dir="rtl" 
           lang="ar" 
@@ -112,11 +115,6 @@ export const Header: React.FC<HeaderProps> = ({
             رَسُولُ اللهِ ۝
           </span>
         </h1>
-      </div>
-
-      {/* Center Zone: Next Border Emblem (visible on wide screens) */}
-      <div className="hidden xl:flex items-center px-4 py-1.5 rounded-full bg-rose-950/40 border border-rose-500/20 shadow-inner hover:scale-105 transition-transform cursor-pointer">
-        <NextBorderLogo size={40} showText={true} />
       </div>
 
       {/* Right zone: Search & Action Utilities */}
