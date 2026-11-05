@@ -37,3 +37,10 @@
 - Manual admin review is still recommended. The current Make route auto-publishes after AI review, so admin review is post-publication, not a pre-publication approval gate.
 - Safety boundary: no frontend/source-code changes, no merge, no production promotion, no secrets inspection, no paid API calls, and no Make paid-plan upgrade were performed for this automation checkpoint.
 - Next verification/fix priorities: (1) resolve Make scheduler timezone and confirm Asia/Dhaka 06:00; (2) fix `published_at` mapping; (3) verify public article rendering; (4) monitor daily execution counts and Gemini quota failures; (5) decide whether admin approval should happen before publication.
+
+## 2026-11-06 - Canonical Admin Login URL
+- Confirmed canonical NextBorder Admin Panel login URL: `https://admin.nextborder.online/`.
+- This is the only admin login URL to provide in future project guidance, setup notes, and documentation unless the user explicitly changes it.
+- Permanently mark the previously suggested `https://www.nextborder.online/admin` URL as rejected/obsolete; do not recommend or reuse it.
+- Scope clarification: this log entry updates the project's canonical URL reference only. It does not delete or modify any website route, DNS record, hosting configuration, or source code.
+
