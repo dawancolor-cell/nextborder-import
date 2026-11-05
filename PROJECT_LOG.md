@@ -107,3 +107,13 @@ This entry consolidates the work, decisions, and verification status recorded fo
 - Keep changes documented in `PROJECT_LOG.md` with evidence and clearly label verified, pending, and unverified items.
 - Current status is a consolidated documentation checkpoint, not a claim that all planned features are finished.
 
+
+
+## 2026-11-06 - Sidebar company logo visibility fix
+- Replaced the hand-drawn placeholder SVG in the sidebar branding slot with the repository's existing `/company-logo.png` asset.
+- Kept the circular gold frame and added restrained hover/glow feedback; the logo scales down with the collapsed sidebar.
+- Removed the duplicate text brand lockup beneath the emblem because the supplied badge already contains the NextBorder wordmark.
+- Source change committed to `feature/nextborder-admin-dashboard`: `5fc7eea90c615bbda1bd0457db2f515548511502`.
+- Not yet verified in a browser or on the live admin host. This branch commit does not establish that SiteChai or the live admin subdomain has deployed it.
+- Functional audit finding: current dashboard records use browser localStorage and some analytics/notifications are demo-derived. The Settings screen also exposes a client-side passcode field, which is not secure authentication. These must not be represented as production-ready CRM/authentication.
+- Next implementation work: inspect all CRUD views and existing backend schema, replace mock/local-only persistence with authenticated backend operations where the data model and access policies are verified, add validation/error/loading states, and run build/lint plus end-to-end smoke tests before any production promotion.
