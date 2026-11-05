@@ -1,5 +1,4 @@
 import React from 'react';
-import { NextBorderLogo } from './NextBorderLogo';
 import { 
   Home, 
   Users, 
@@ -67,29 +66,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
         collapsed ? 'w-20' : 'w-64 md:w-72'
       }`}
     >
-      {/* Top Branding Section */}
-      <div className="p-5 flex flex-col items-center border-b border-white/10">
+      {/* Original company emblem: use the repository's supplied logo asset, not the placeholder SVG. */}
+      <div className="px-4 py-5 flex flex-col items-center border-b border-white/10">
         <div className="flex items-center justify-between w-full">
-          {!collapsed ? (
-            <div className="flex flex-col items-center mx-auto text-center cursor-pointer group">
-              <div className="relative transform group-hover:scale-105 transition-transform duration-300">
-                <NextBorderLogo size={82} />
+          <div className="mx-auto flex flex-col items-center">
+            <div className="relative group">
+              <span
+                aria-hidden="true"
+                className="absolute -inset-2 rounded-full bg-amber-300/10 blur-md opacity-70 group-hover:opacity-100 transition-opacity duration-700"
+              />
+              <div className={`relative rounded-full overflow-hidden border border-amber-300/70 shadow-[0_0_0_2px_rgba(212,175,55,.16),0_0_24px_rgba(212,175,55,.18)] transition-transform duration-500 ease-out group-hover:scale-[1.035] ${collapsed ? 'h-12 w-12' : 'h-[108px] w-[108px]'}`}>
+                <img
+                  src="/company-logo.png"
+                  alt="NextBorder company logo"
+                  className="h-full w-full object-cover"
+                  loading="eager"
+                  onError={(event) => {
+                    event.currentTarget.style.display = 'none';
+                  }}
+                />
               </div>
-              <h2 className="text-sm font-bold tracking-wider text-white uppercase mt-2.5">NEXT BORDER</h2>
-              <span className="text-[10px] tracking-widest text-amber-300/80 font-medium uppercase mt-0.5">
-                VISA CONSULTANCY
+            </div>
+            {!collapsed && (
+              <span className="mt-3 text-[9px] font-semibold uppercase tracking-[.24em] text-amber-200/70">
+                Admin Workspace
               </span>
-            </div>
-          ) : (
-            <div className="mx-auto cursor-pointer hover:scale-105 transition-transform">
-              <NextBorderLogo size={44} />
-            </div>
-          )}
-
+            )}
+          </div>
           <button
             onClick={onToggleCollapse}
             className="hidden md:flex p-1.5 rounded-lg text-rose-300 hover:text-white hover:bg-white/10 transition-colors"
             title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
           </button>
